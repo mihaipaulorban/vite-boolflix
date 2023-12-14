@@ -18,7 +18,7 @@ Tutto tramite un input nel dom
 
 ## Documentazione dell'API
 
-[TheMovieDB](https://readme.so/editor) <-- Questo link porta al sito per la documentazione in cui é possibile fare anche test di chiamata.
+[TheMovieDB](https://developer.themoviedb.org/reference/search-movie) <-- Questo link porta al sito per la documentazione in cui é possibile fare anche test di chiamata.
 
 ## Store.js
 
