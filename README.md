@@ -6,11 +6,7 @@ Il progetto nasce come un clone di Netflix o di un qualsiasi sito di straming, c
 
 Usiamo l'API di The Movie Database per ottenere le informazioni e la lista di film.
 
-#### Get all items
-
-```http
-  GET /api/items
-```
+#### Ottengo i film
 
 | Parameter | Type     | Description                           |
 | :-------- | :------- | :------------------------------------ |
