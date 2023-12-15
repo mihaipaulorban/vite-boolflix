@@ -10,7 +10,7 @@ export const store = reactive({
 
   //   Questa funzione costruisce l'url finale con cui viene fatta la chiamata all'API
   buildUrl(filters) {
-    let url = `${this.baseURL}?api_key=${this.apiKey}`;
+    let url = `${this.baseURL}?api_key=${this.apiKey}&language=it-IT`;
     for (const key in filters) {
       url += `&${key}=${encodeURIComponent(filters[key])}`;
     }
@@ -19,8 +19,6 @@ export const store = reactive({
 
   //   Effettua la chiamata e mostra in console
   fetchMovies(url) {
-    axios.get(url).then((response) => {
-      console.log(response.data.results);
-    });
+    return axios.get(url).then((response) => response.data.results);
   },
 });
