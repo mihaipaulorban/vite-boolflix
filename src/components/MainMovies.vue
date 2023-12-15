@@ -3,6 +3,12 @@ export default {
   props: {
     movies: Array,
   },
+  methods: {
+    convertRating(voteAverage) {
+      // Converto il rating da 1-10 a 1-5 arrotondando per eccesso
+      return Math.ceil(voteAverage / 2);
+    },
+  },
 };
 </script>
 
@@ -11,7 +17,7 @@ export default {
     <p>{{ movie.original_language }}</p>
     <p>{{ movie.original_title }}</p>
     <p>{{ movie.title }}</p>
-    <p>{{ movie.vote_average }}</p>
+    <p>Rating: {{ convertRating(movie.vote_average) }}/5</p>
     <img
       :src="
         movie.poster_path
