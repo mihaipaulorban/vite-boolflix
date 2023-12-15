@@ -12,7 +12,13 @@ export default {
     <p>{{ movie.original_title }}</p>
     <p>{{ movie.title }}</p>
     <p>{{ movie.vote_average }}</p>
-    <img :src="`https://image.tmdb.org/t/p/w500/${movie.poster_path}`" />
+    <img
+      :src="
+        movie.poster_path
+          ? `https://image.tmdb.org/t/p/w500/${movie.poster_path}`
+          : '/PlaceholderPoster.png'
+      "
+    />
   </div>
 </template>
 

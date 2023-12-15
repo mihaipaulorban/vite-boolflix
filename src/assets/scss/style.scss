@@ -1,3 +1,7 @@
+// Miei file partials
 @use './partials/variables' as *;
 @use './partials/common' as *;
 @use './partials/reset' as *;
+
+// BOOTSTRAP
+@import 'bootstrap/scss/bootstrap';

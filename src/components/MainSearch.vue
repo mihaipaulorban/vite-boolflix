@@ -12,8 +12,6 @@ export default {
     const searchMovies = () => {
       if (searchQuery.value.length > 0) {
         const url = store.buildUrl({ query: searchQuery.value });
-
-        // Effettua la chiamata API e emette l'evento con i risultati
         store.fetchMovies(url).then((movies) => {
           emit('update-movies', movies);
         });
@@ -26,13 +24,12 @@ export default {
 </script>
 
 <template>
-  <div>
-    <input
-      v-model="searchQuery"
-      @input="searchMovies"
-      placeholder="Cerca un film..."
-    />
-  </div>
+  <!-- Form per gestire la ricerca -->
+  <form @submit.prevent="searchMovies">
+    <input v-model="searchQuery" placeholder="Cerca un film..." />
+    <!-- Pulsante per inviare la ricerca -->
+    <button type="submit">Cerca</button>
+  </form>
 </template>
 
 <style></style>
