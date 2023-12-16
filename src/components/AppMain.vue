@@ -1,33 +1,42 @@
 <script>
+import { ref, defineComponent } from 'vue';
+import { store } from '../store';
 import MainSearch from './MainSearch.vue';
-import MainMovies from './MainMovies.vue';
+import MediaSection from './MediaSection.vue';
 
-export default {
+export default defineComponent({
   components: {
     MainSearch,
-    MainMovies,
+    MediaSection,
   },
-  data() {
-    return {
-      // Array vuoto per memorizzare i film
-      movies: [],
+  setup() {
+    const searchQuery = ref('');
+    const movies = ref([]);
+    const tvShows = ref([]);
+
+    const searchMedia = (query) => {
+      if (query.length > 0) {
+        const moviesUrl = store.buildUrl(store.movieURL, { query });
+        store.fetchMedia(moviesUrl).then((results) => {
+          movies.value = results;
+        });
+
+        const tvUrl = store.buildUrl(store.tvURL, { query });
+        store.fetchMedia(tvUrl).then((results) => {
+          tvShows.value = results;
+        });
+      }
     };
+
+    return { searchQuery, searchMedia, movies, tvShows };
   },
-  methods: {
-    setMovies(newMovies) {
-      // Aggiornara l'array di film
-      this.movies = newMovies;
-    },
-  },
-};
+});
 </script>
 
 <template>
-  <!-- Vengono aggiornati i film ad ogni ricerca -->
-  <main-search @update-movies="setMovies" />
-
-  <!-- Viene ricevuto l'array di film come prop -->
-  <main-movies :movies="movies" />
+  <main-search @search-media="searchMedia" />
+  <h2>Film</h2>
+  <media-section :media="movies" />
+  <h2>TV</h2>
+  <media-section :media="tvShows" />
 </template>
-
-<style></style>
