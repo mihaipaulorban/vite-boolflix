@@ -14,11 +14,11 @@ export default {
 
 <template>
   <div class="media-container">
-    <!-- Itera i film dalla chiamata api -->
+    <!-- Iterazione sui media -->
     <div class="media-card" v-for="mediaItem in media" :key="mediaItem.id">
-      <!-- Poster e info container -->
+      <!-- Container poster con immagine e informazioni -->
       <div class="poster-container">
-        <!-- Poster-->
+        <!-- Immagine del media -->
         <img
           :src="
             mediaItem.poster_path
@@ -28,23 +28,48 @@ export default {
           alt="Media Poster"
           class="media-poster"
         />
-        <!-- Media info on hover -->
+        <!-- Informazioni del media visibili al passaggio del mouse -->
         <div class="media-info">
-          <p>{{ mediaItem.original_language.toUpperCase() }}</p>
+          <div class="media-lang">
+            <!-- Mostra l'immagine della bandiera per l'inglese -->
+            <img
+              v-if="mediaItem.original_language === 'en'"
+              src="../../public/us.png"
+              alt="US Flag"
+              class="flag-icon"
+            />
+            <!-- Mostra l'immagine della bandiera per l'italiano -->
+            <img
+              v-if="mediaItem.original_language === 'it'"
+              src="../../public/it.png"
+              alt="Italy Flag"
+              class="flag-icon"
+            />
+            <!-- Mostra il testo della lingua solo per le altre lingue -->
+            <span
+              v-if="
+                mediaItem.original_language !== 'en' &&
+                mediaItem.original_language !== 'it'
+              "
+            >
+              {{ mediaItem.original_language.toUpperCase() }}
+            </span>
+          </div>
           <p>{{ mediaItem.original_title || mediaItem.name }}</p>
           <p>{{ mediaItem.title || mediaItem.name }}</p>
+          <p class="overview">{{ mediaItem.overview }}</p>
           <div class="rating">
             <!-- Stelle piene -->
             <i
               class="bi bi-star-fill"
               v-for="star in convertRating(mediaItem.vote_average)"
-              :key="`filled-${star}`"
+              :key="star"
             ></i>
-            <!-- Stelle Vuote -->
+            <!-- Stelle vuote -->
             <i
               class="bi bi-star"
               v-for="emptyStar in 5 - convertRating(mediaItem.vote_average)"
-              :key="`empty-${emptyStar}`"
+              :key="emptyStar"
             ></i>
           </div>
         </div>
@@ -70,6 +95,7 @@ $poster-height: 300px;
     width: $poster-width;
     height: $poster-height;
     margin-bottom: $card-margin;
+    border: 2px solid white;
 
     .poster-container {
       position: relative;
@@ -98,6 +124,17 @@ $poster-height: 300px;
         display: flex;
         flex-direction: column;
         justify-content: center;
+        .overview {
+          max-height: 100px;
+          overflow-y: auto;
+          margin-top: 10px;
+        }
+
+        .flag-icon {
+          width: 32px;
+          height: auto;
+          display: block;
+        }
       }
 
       &:hover .media-info {
