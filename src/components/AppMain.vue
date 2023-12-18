@@ -1,42 +1,51 @@
 <script>
-import { ref, defineComponent } from 'vue';
+import { ref } from 'vue';
 import { store } from '../store';
-import MainSearch from './MainSearch.vue';
+import AppHeader from './AppHeader.vue';
 import MediaSection from './MediaSection.vue';
 
-export default defineComponent({
+export default {
   components: {
-    MainSearch,
+    AppHeader,
     MediaSection,
   },
   setup() {
-    const searchQuery = ref('');
+    // Array vuoti per popolare i film
     const movies = ref([]);
     const tvShows = ref([]);
 
-    const searchMedia = (query) => {
+    const searchMedia = async (query) => {
+      // Controlla se la ricerca non è vuota
       if (query.length > 0) {
-        const moviesUrl = store.buildUrl(store.movieURL, { query });
-        store.fetchMedia(moviesUrl).then((results) => {
-          movies.value = results;
-        });
-
-        const tvUrl = store.buildUrl(store.tvURL, { query });
-        store.fetchMedia(tvUrl).then((results) => {
-          tvShows.value = results;
-        });
+        // Crea la chiamata per i gilm
+        const moviesUrl = store.buildUrl('movie', { query });
+        movies.value = await store.fetchMedia(moviesUrl);
+        // Crea la chiamata per le serie tv
+        const tvUrl = store.buildUrl('tv', { query });
+        tvShows.value = await store.fetchMedia(tvUrl);
       }
     };
 
-    return { searchQuery, searchMedia, movies, tvShows };
+    return { searchMedia, movies, tvShows };
   },
-});
+};
 </script>
 
 <template>
-  <main-search @search-media="searchMedia" />
+  <!-- Header con ricerca -->
+  <AppHeader :on-search="searchMedia" />
+
+  <!-- TItoli film e tv con lista popolata -->
   <h2>Film</h2>
   <media-section :media="movies" />
   <h2>TV</h2>
   <media-section :media="tvShows" />
 </template>
+
+<style scoped lang="scss">
+h2 {
+  margin: 30px 30px;
+  color: red;
+  text-transform: uppercase;
+}
+</style>

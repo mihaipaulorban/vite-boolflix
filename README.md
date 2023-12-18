@@ -39,3 +39,11 @@ Per la ricerca ho una funzione `searchMovies` che si basa su `ref` che è una fu
 Usando ref, qualsiasi valore che assegno a questa variabile diventa reattivo, il che significa che Vue traccia le sue modifiche e aggiorna automaticamente il DOM quando il valore cambia.
 
 La variabile é quindi collegata all'input che ne comunica il valore.
+
+## Altre funzionalitá
+
+- QUando viene fatta la ricerca abbiamo risultati sia per tv che per film
+
+- Quando si fa hover sul film appaiono le info e per la descrizione viene applicato un overflow per scorrere in caso di descrizioni lunghe.
+
+-Per la ricerca si puó usare sia il tasto invio che il tasto cerca
